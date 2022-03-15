@@ -1,9 +1,7 @@
 import torch
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtCore import Qt
 
-import numpy as np
 from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
 from cv2 import cv2
 from torch.backends import cudnn
@@ -32,6 +30,7 @@ class MainWindow(QtWidgets.QWidget, Ui_Form):
 
     def init(self):
         """初始化"""
+        self.setWindowTitle("口罩检测")
 
         # 参数
         self.output_size = 480
@@ -123,6 +122,9 @@ class MainWindow(QtWidgets.QWidget, Ui_Form):
         half = False  # use FP16 half-precision inference
         dnn = False  # use OpenCV DNN for ONNX inference
         tmp_dir = "images/tmp"
+        new_item = QTableWidgetItem('')
+        for i in range(2):
+            self.tableWidget_result.setItem(i, 0, new_item)
         if not os.path.exists(tmp_dir):
             os.makedirs(tmp_dir)
         print(f"开始检测图片：{source}")
